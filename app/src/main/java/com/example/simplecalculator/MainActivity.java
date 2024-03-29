@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
                 ans *= num1;
             }
         }
+        else
+            ans = num1;
 
         operation = 0;
         display.setHint("" + ans);
@@ -88,10 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 display.setHint("" + ans);
             }
-        }
-        else {
-            display.setHint("0.0");
-            ans = 0;
         }
         operation = 2;
     }
