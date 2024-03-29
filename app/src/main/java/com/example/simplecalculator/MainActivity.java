@@ -4,13 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     EditText display;
-    double num1, operation = 0, ans = 0, calculatedAns = 0;
+    double num1 = 0, operation = 0, ans = 0, calculatedAns = 0;
     String temp;
+    boolean isPlus = false, isMinus = false, isDivide = false, isTimes = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,22 +23,46 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void plusAction(View view) {
-        temp = display.getText().toString();
-        if(!(temp.isEmpty())){
-            display.setText("");
-            num1 = Double.parseDouble(temp);
-            if(operation == 2){
-                ans -= num1;
-                display.setHint("" + ans);
-            }
-            else if(operation == 3){
+    public void lastAction(String temp) {
+        display.setText("");
+        num1 = Double.parseDouble(temp);
 
-            }
-            else if(operation == 4){
-
+        if (operation == 1) {
+            ans += num1;
+        }
+        else if (operation == 2) {
+            ans -= num1;
+        }
+        else if (operation == 3) {
+            if (num1 != 0) {
+                if (ans != 0) {
+                    ans /= num1;
+                }
             }
             else {
+                Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else if (operation == 4) {
+            if (ans != 0) {
+                ans *= num1;
+            }
+        }
+
+        operation = 0;
+        display.setHint("" + ans);
+    }
+
+
+    public void plusAction(View view) {
+        isPlus = true;
+        temp = display.getText().toString();
+        if(!(temp.isEmpty())){
+            if(isMinus || isDivide || isTimes)
+                lastAction(temp);
+            else{
+                display.setText("");
+                num1 = Double.parseDouble(temp);
                 ans += num1;
                 display.setHint("" + ans);
             }
@@ -45,58 +71,101 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void minusAction(View view) {
+        isMinus = true;
         temp = display.getText().toString();
-        if(!(temp.isEmpty())){
-            display.setText("");
-            num1 = Double.parseDouble(temp);
-
-            if(operation == 1) {
-                ans += num1;
+        if (!temp.isEmpty()) {
+            if (isPlus || isDivide || isTimes) {
+                lastAction(temp);
+            }
+            else {
+                display.setText("");
+                num1 = Double.parseDouble(temp);
+                if (ans == 0) {
+                    ans = num1;
+                }
+                else {
+                    ans -= num1;
+                }
                 display.setHint("" + ans);
             }
-            else if(operation == 3){
-
-            }
-            else if(operation == 4){
-
-            }
-            else{
-            ans -= num1;
-            display.setHint("" + ans);
-            }
+        }
+        else {
+            display.setHint("0.0");
+            ans = 0;
         }
         operation = 2;
     }
 
     public void divideAction(View view) {
+        isDivide = true;
+        temp = display.getText().toString();
+        if (!temp.isEmpty()) {
+            if (isPlus || isMinus || isTimes) {
+                lastAction(temp);
+            }
+            else {
+                display.setText("");
+                num1 = Double.parseDouble(temp);
+                if (num1 != 0) {
+                    if (ans != 0) {
+                        ans /= num1;
+                    }
+                    else {
+                        ans = num1;
+                    }
+                    display.setHint("" + ans);
+                }
+                else {
+                    Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
         operation = 3;
     }
 
     public void timesAction(View view) {
+        isTimes = true;
+        temp = display.getText().toString();
+        if (!temp.isEmpty()) {
+            if (isPlus || isMinus || isDivide) {
+                lastAction(temp);
+            }
+            else {
+                display.setText("");
+                num1 = Double.parseDouble(temp);
+                if (ans != 0) {
+                    ans *= num1;
+                }
+                else {
+                    ans = num1;
+                }
+                display.setHint("" + ans);
+            }
+        }
+        operation = 4;
     }
 
     public void resetAction(View view) {
         display.setText("");
-        display.setHint("Enter num");
+        display.setHint("");
         num1 = 0;
         ans = 0;
         operation = 0;
+        isPlus = false;
+        isMinus = false;
+        isDivide = false;
+        isTimes = false;
     }
 
     public void calculateAction(View view) {
         temp = display.getText().toString();
-        if(!(temp.isEmpty())) {
-            if(operation == 1) {
-                num1 = Double.parseDouble(temp);
-                ans += num1;
-            }
-            else if(operation == 2){
-                num1 = Double.parseDouble(temp);
-                ans -= num1;
-            }
+        if (!temp.isEmpty()) {
+            lastAction(temp);
         }
-        display.setText("");
+
+        operation = 0;
         calculatedAns = ans;
+        display.setText("");
         display.setHint("" + calculatedAns);
     }
 
