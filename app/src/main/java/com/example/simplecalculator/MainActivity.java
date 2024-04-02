@@ -87,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             display.setHint(""+ans);
-            if(!(temp.isEmpty()))
+            if(ans == 0){
+                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
+            }
+            if(!(temp.isEmpty()) && (ans != 0))
                 Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         operation = 1;
@@ -114,7 +117,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             display.setHint(""+ans);
-            if(!(temp.isEmpty()))
+            if(ans == 0){
+                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
+            }
+            if(!(temp.isEmpty()) && (ans != 0))
                 Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         operation = 2;
@@ -146,7 +152,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             display.setHint(""+ans);
-            if(!(temp.isEmpty()))
+            if(ans == 0){
+                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
+            }
+            if(!(temp.isEmpty()) && (ans != 0))
                 Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         operation = 3;
@@ -173,7 +182,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             display.setHint(""+ans);
-            if(!(temp.isEmpty()))
+            if(ans == 0){
+                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
+            }
+            if(!(temp.isEmpty()) && (ans != 0))
                 Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         operation = 4;
@@ -203,7 +215,10 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             display.setHint(""+ans);
-            if(!(temp.isEmpty()))
+            if(ans == 0){
+                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
+            }
+            if(!(temp.isEmpty()) && (ans != 0))
                 Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
     }
