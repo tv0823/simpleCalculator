@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class MainActivity extends AppCompatActivity {
     EditText display;
     double num1 = 0, operation = 0, ans = 0, calculatedAns = 0;
+    int input_length = 0;
     String temp;
     boolean isPlus = false, isMinus = false, isDivide = false, isTimes = false;
 
@@ -56,10 +57,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public boolean check_input(String input) {
+        input_length = input.length();
+        if(!(input.isEmpty())) {
+            if(input_length == 0) {
+                if((input.charAt(0) != '-') && (input.charAt(0) != '.'))
+                    return true;
+            } else if (input_length > 0) {
+                if((input.charAt(input.length()-1) != '-') && (input.charAt(input.length()-1) != '.'))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+
     public void plusAction(View view) {
         isPlus = true;
         temp = display.getText().toString();
-        if(!(temp.isEmpty())){
+        if(check_input(temp)){
             if(isMinus || isDivide || isTimes)
                 lastAction(temp);
             else{
@@ -69,13 +85,18 @@ public class MainActivity extends AppCompatActivity {
                 display.setHint("" + ans);
             }
         }
+        else {
+            display.setHint(""+ans);
+            if(!(temp.isEmpty()))
+                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
+        }
         operation = 1;
     }
 
     public void minusAction(View view) {
         isMinus = true;
         temp = display.getText().toString();
-        if (!temp.isEmpty()) {
+        if(check_input(temp)){
             if (isPlus || isDivide || isTimes) {
                 lastAction(temp);
             }
@@ -91,13 +112,18 @@ public class MainActivity extends AppCompatActivity {
                 display.setHint("" + ans);
             }
         }
+        else {
+            display.setHint(""+ans);
+            if(!(temp.isEmpty()))
+                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
+        }
         operation = 2;
     }
 
     public void divideAction(View view) {
         isDivide = true;
         temp = display.getText().toString();
-        if (!temp.isEmpty()) {
+        if(check_input(temp)){
             if (isPlus || isMinus || isTimes) {
                 lastAction(temp);
             }
@@ -118,13 +144,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+        else {
+            display.setHint(""+ans);
+            if(!(temp.isEmpty()))
+                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
+        }
         operation = 3;
     }
 
     public void timesAction(View view) {
         isTimes = true;
         temp = display.getText().toString();
-        if (!temp.isEmpty()) {
+        if(check_input(temp)){
             if (isPlus || isMinus || isDivide) {
                 lastAction(temp);
             }
@@ -139,6 +170,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 display.setHint("" + ans);
             }
+        }
+        else {
+            display.setHint(""+ans);
+            if(!(temp.isEmpty()))
+                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         operation = 4;
     }
@@ -157,14 +193,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void calculateAction(View view) {
         temp = display.getText().toString();
-        if (!temp.isEmpty()) {
+        if(check_input(temp)) {
             lastAction(temp);
-        }
 
-        operation = 0;
-        calculatedAns = ans;
-        display.setText("");
-        display.setHint("" + calculatedAns);
+            operation = 0;
+            calculatedAns = ans;
+            display.setText("");
+            display.setHint("" + calculatedAns);
+        }
+        else {
+            display.setHint(""+ans);
+            if(!(temp.isEmpty()))
+                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void creditsScreen(View view) {
