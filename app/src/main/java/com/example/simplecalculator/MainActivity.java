@@ -60,11 +60,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean check_input(String input) {
         input_length = input.length();
         if(!(input.isEmpty())) {
-            if(input_length == 0) {
-                if((input.charAt(0) != '-') && (input.charAt(0) != '.'))
+            if(input_length == 1) {
+                if((input.equals("-") != true) && (input.equals(".") != true) && (input.equals("+") != true))
                     return true;
             } else if (input_length > 0) {
-                if((input.charAt(input.length()-1) != '-') && (input.charAt(input.length()-1) != '.'))
+                if((input.equals("-.") != true) && (input.equals("+.") != true))
                     return true;
             }
         }
