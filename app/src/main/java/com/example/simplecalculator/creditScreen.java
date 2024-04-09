@@ -13,6 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class creditScreen extends AppCompatActivity {
     TextView lastAns;
+    Intent getCredit;
     double ans;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +21,7 @@ public class creditScreen extends AppCompatActivity {
         setContentView(R.layout.activity_credit_screen);
 
         lastAns = findViewById(R.id.lastAns);
-        Intent getCredit = getIntent();
+        getCredit = getIntent();
         ans = getCredit.getDoubleExtra("ans", 0);
         lastAns.setText("The last answer is: " + ans);
     }
