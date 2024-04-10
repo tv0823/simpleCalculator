@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 if (ans != 0) {
                     ans /= num1;
                 }
+                display.setHint("" + ans);
             }
             else {
                 Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
@@ -50,9 +51,9 @@ public class MainActivity extends AppCompatActivity {
                 ans *= num1;
             }
         }
-        else
+        else {
             ans = num1;
-
+        }
         operation = 0;
         display.setHint("" + ans);
     }
@@ -60,18 +61,19 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean check_input(String input) {
         input_length = input.length();
-        if(!(input.isEmpty())) {
-            if(input_length == 1) {
-                if((input.equals("-") != true) && (input.equals(".") != true) && (input.equals("+") != true))
-                    return true;
-            } else if (input_length > 0) {
-                if((input.equals("-.") != true) && (input.equals("+.") != true))
-                    return true;
-            }
+        if(input_length == 1) {
+            if((!input.isEmpty() && input.equals("-") != true) && (input.equals(".") != true) && (input.equals("+") != true))
+                return true;
+        }
+        else if (input_length > 0) {
+            if((!input.isEmpty() && input.equals("-.") != true) && (input.equals("+.") != true))
+                return true;
+        }
+        if(!isTimes && !isDivide && !isMinus && !isPlus) {
+            Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         return false;
     }
-
 
     public void plusAction(View view) {
         isPlus = true;
@@ -80,19 +82,11 @@ public class MainActivity extends AppCompatActivity {
             if(isMinus || isDivide || isTimes)
                 lastAction(temp);
             else{
-                display.setText("");
-                num1 = Double.parseDouble(temp);
-                ans += num1;
-                display.setHint("" + ans);
+                lastAction(temp);
             }
         }
         else {
             display.setHint(""+ans);
-            if(ans == 0){
-                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
-            }
-            if(!(temp.isEmpty()) && (ans != 0))
-                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         operation = 1;
     }
@@ -105,24 +99,11 @@ public class MainActivity extends AppCompatActivity {
                 lastAction(temp);
             }
             else {
-                display.setText("");
-                num1 = Double.parseDouble(temp);
-                if (ans == 0) {
-                    ans = num1;
-                }
-                else {
-                    ans -= num1;
-                }
-                display.setHint("" + ans);
+                lastAction(temp);
             }
         }
         else {
             display.setHint(""+ans);
-            if(ans == 0){
-                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
-            }
-            if(!(temp.isEmpty()) && (ans != 0))
-                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         operation = 2;
     }
@@ -135,29 +116,11 @@ public class MainActivity extends AppCompatActivity {
                 lastAction(temp);
             }
             else {
-                display.setText("");
-                num1 = Double.parseDouble(temp);
-                if (num1 != 0) {
-                    if (ans != 0) {
-                        ans /= num1;
-                    }
-                    else {
-                        ans = num1;
-                    }
-                    display.setHint("" + ans);
-                }
-                else {
-                    Toast.makeText(this, "Cannot divide by zero", Toast.LENGTH_SHORT).show();
-                }
+                lastAction(temp);
             }
         }
         else {
             display.setHint(""+ans);
-            if(ans == 0){
-                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
-            }
-            if(!(temp.isEmpty()) && (ans != 0))
-                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         operation = 3;
     }
@@ -170,24 +133,11 @@ public class MainActivity extends AppCompatActivity {
                 lastAction(temp);
             }
             else {
-                display.setText("");
-                num1 = Double.parseDouble(temp);
-                if (ans != 0) {
-                    ans *= num1;
-                }
-                else {
-                    ans = num1;
-                }
-                display.setHint("" + ans);
+                lastAction(temp);
             }
         }
         else {
             display.setHint(""+ans);
-            if(ans == 0){
-                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
-            }
-            if(!(temp.isEmpty()) && (ans != 0))
-                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
         operation = 4;
     }
@@ -206,9 +156,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void calculateAction(View view) {
         temp = display.getText().toString();
-        if(check_input(temp)) {
+        if(check_input(temp) && (isDivide || isPlus || isMinus || isTimes)) {
             lastAction(temp);
-
             operation = 0;
             calculatedAns = ans;
             display.setText("");
@@ -216,11 +165,6 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             display.setHint(""+ans);
-            if(ans == 0){
-                Toast.makeText(this, "Input is empty", Toast.LENGTH_SHORT).show();
-            }
-            if(!(temp.isEmpty()) && (ans != 0))
-                Toast.makeText(this, "Wrong input", Toast.LENGTH_SHORT).show();
         }
     }
 
