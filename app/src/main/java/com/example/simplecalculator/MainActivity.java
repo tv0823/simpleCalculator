@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-    Intent credit;
     EditText display;
     double num1 = 0, operation = 0, ans = 0, calculatedAns = 0;
     int input_length = 0;
@@ -22,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         display = findViewById(R.id.display);
-        credit = new Intent(this,creditScreen.class);
     }
 
     public void lastAction(String temp) {
@@ -169,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void creditsScreen(View view) {
+        Intent credit = new Intent(this,creditScreen.class);
         credit.putExtra("ans",calculatedAns);
         startActivity(credit);
     }
